@@ -1,0 +1,173 @@
+# EMULANDICE2-GIS MODULE CONFIGURATION
+# This YAML file describes the arguments and configuration needed to run the module.
+# It is used to generate ModuleSchema objects.
+# Based on https://github.com/fact-sealevel/emulandice2/blob/main/src/emulandice2/cli.py (--icesource=GIS).
+
+module_name: "emulandice2-gis"
+container_image: "ghcr.io/fact-sealevel/emulandice2:edge"
+uses_climate_file: true 
+command: "main" 
+input_dir_name: "emulandice2"
+
+#Argument specifications
+arguments:
+  top_level:
+    - name: "pipeline-id"
+      type: "str" 
+      source: "metadata.pipeline-id" 
+      optional: true 
+      description: "Unique identifier for the run of this module in the experiment."
+    - name: "location-file"
+      type: "str"
+      source: "metadata.location-file"
+      optional: true
+      help: "File containing name, id, lat, and lon of points for localization"
+      mount:
+        container_path: "/mnt/shared_in"
+    - name: "scenario"
+      type: "str"
+      source: "metadata.scenario"
+      optional: false
+      help: "SSP Emissions scenario."
+    - name: "pyear-start"
+      type: "int"
+      source: "metadata.pyear-start"
+      optional: true
+      help: "Start year of the projection period."
+    - name: "pyear-end"
+      type: "int"
+      source: "metadata.pyear-end"
+      optional: true
+      help: "End year of the projection period."
+    - name: "pyear-step"
+      type: "int"
+      source: "metadata.pyear-step"
+      optional: true
+      help: "Step size for the projection period."
+    - name: "baseyear"
+      type: "int"
+      source: "metadata.baseyear"
+      optional: true
+      help: "Base year to which projections should be referenced."
+  options:
+    - name: "ice-source"
+      type: "str"
+      source: "module_inputs.options.ice_source"
+      optional: false
+      default_value: "GIS"
+      help: "For Greenland Ice Sheet, ice-source is always GIS"
+    - name: "region"
+      type: "str"
+      source: "module_inputs.options.region"
+      optional: false
+      help: "Flows from ice source. COME BACK TO" 
+      default_value: "ALL" 
+      allowed_values: ["ALL"]
+    - name: "chunksize"
+      type: "int"
+      source: "module_inputs.options.chunksize"
+      optional: true
+      help: "Size of each chunk to process."
+    - name: "cyear-start"
+      type: "int"
+      source: "module_inputs.options.cyear_start"
+      optional: true
+      help: "Start year of the climate period."
+    - name: "cyear-end"
+      type: "int"
+      source: "module_inputs.options.cyear_end"
+      optional: true
+      help: "End year of the climate period."
+    - name: "no-rebase"
+      type: "bool"
+      source: "module_inputs.options.no_rebase"
+      optional: true
+      help: "Do not rebase samples to baseyear or regrid time."
+    - name: "seed"
+      type: "int"
+      source: "module_inputs.options.seed"
+      default_value: 2024
+      help: "Random seed for reproducibility."
+  fingerprint_params:
+    - name: "grdfingerprintfile"
+      type: "str"
+      source: "module_inputs.fingerprint-params.grdfingerprintfile"
+      #optional: true
+      filename: "grd_fingerprintmap.yml"
+      help: "File containing the grid fingerprint."
+      mount:
+        volume: "module_specific_in"
+        container_path: "/mnt/module_specific_in"
+    - name: "fingerprint-dir"
+      type: "str"
+      source: "module_inputs.fingerprint-params.fingerprint_dir"
+      #optional: true
+      default_value: "FPRINT"
+      help: "Directory containing the fingerprint files."
+      mount:
+        volume: "module_specific_in"
+        container_path: "/mnt/module_specific_in"
+  inputs:
+    - name: "climate-data-file"
+      type: "str"
+      source: "module_inputs.inputs.climate-data-file"
+      optional: false
+      filename: "fair-temperature/climate.nc"
+      help: "Path to climate data file to be used in experiment (usually output of climate step or supplied alt. fair data)."
+      mount:
+        volume: "output"
+        container_path: "/mnt/out"
+        transform: "filename"
+    - name: "emu-file"
+      type: "str"
+      source: "module_inputs.inputs.emu_file"
+      optional: false
+      help: "Path to the emulandice2 build file."
+      filename: "emu_file/GIS_ALL_CISM_pow_exp_01_EMULATOR.RData"
+      mount:
+        volume: "module_specific_input"
+        container_path: "/mnt/module_specific_in"
+  outputs:
+    files:
+      - name: "output-gslr-file"
+        type: "str"
+        source: "module_inputs.outputs.output-gslr-file"
+        optional: false
+        help: "Path at which to write the output GSLR file."
+        output_type: "global"
+        filename: "output-gslr-GIS-ALL.nc"
+        filename_map:
+          region:
+            ALL: "output-gslr-gris-ALL.nc"
+        mount:
+          volume: "output"
+          container_path: "/mnt/out"
+          transform: "filename"
+      - name: "output-lslr-file"
+        type: "str"
+        source: "module_inputs.outputs.output-lslr-file"
+        optional: true
+        help: "Path at which to write the output LSLR file."
+        output_type: "local"
+        filename: "output-lslr-GIS-ALL.nc"
+        filename_map:
+          region:
+            ALL: "output-lslr-gris-ALL.nc"
+        mount:
+          volume: "output"
+          container_path: "/mnt/out"
+          transform: "filename"
+# Volume specifications
+volumes:
+  module_specific_input:
+    host_path: "module_inputs.input_paths.module_specific_input_dir"
+    help: "Module-specific input directory"
+    container_path: "/mnt/module_specific_in"
+  shared_input:
+    host_path: "module_inputs.input_paths.shared_input_dir"
+    help: "Shared input directory (fingerprints, location file)"
+    container_path: "/mnt/shared_in"
+  output:
+    host_path: "module_inputs.output_paths.output_dir"
+    help: "Output directory for SLR files"
+    container_path: "/mnt/out"
