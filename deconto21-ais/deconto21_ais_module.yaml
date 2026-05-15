@@ -5,8 +5,8 @@
 # corresponding containerized facts module repository and be generated semi programmatically.
 
 module_name: "deconto21-ais"
-container_image: "ghcr.io/fact-sealevel/deconto21-ais:0.1.2"
-uses_climate_file: false
+container_image: "ghcr.io/fact-sealevel/deconto21-ais:0.1.3"
+uses_climate_file: true
 climate_file_required: false
 command: "main"
 # Argument specifications
@@ -121,6 +121,14 @@ arguments:
       mount:
         volume: "input"
         container_path: "/mnt/module_specific_in"
+    - name: "climate-data-file"
+      type: "file"
+      source: "module_inputs.inputs.climate_data_file"
+      filename: "fair-temperature/climate.nc"
+      mount:
+        volume: "output"
+        container_path: "/mnt/out"
+        transform: "filename"
   # Output file arguments
   outputs:
     files:
