@@ -116,7 +116,7 @@ arguments:
       type: "file"
       source: "module_inputs.inputs.pophist_file"
       help: "TO DO ADD HELP TEXT"
-      filename: "UNWPP2012_population_historical.csv"
+      filename: "UNWPP2012 population historical.csv"
       mount:
         volume: "input"
         container_path: "/mnt/module_specific_in"
@@ -124,7 +124,7 @@ arguments:
       type: "file"
       source: "module_inputs.inputs.reservoir_file"
       help: "TO DO ADD HELP TEXT"
-      filename: "Chao2008_groundwater_impoundment.csv"
+      filename: "Chao2008 groundwater impoundment.csv"
       mount:
         volume: "input"
         container_path: "/mnt/module_specific_in"
@@ -140,7 +140,7 @@ arguments:
       type: "file"
       source: "module_inputs.inputs.gwd_file"
       help: "TO DO ADD HELP TEXT"
-      filename: [Konikow2011_GWD.csv, Wada2012_GWD.csv]
+      filename: [Konikow2011 GWD.csv, Wada2012 GWD.csv]
       mount:
         volume: "input"
         container_path: "/mnt/module_specific_in"
