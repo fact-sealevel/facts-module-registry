@@ -45,6 +45,11 @@ arguments:
       source: "module_inputs.inputs.smooth_win"
       help: "TO DO ADD HELP TEXT"
       default_value: 19
+    - name: "seed"
+      type: "int"
+      source: "module_inputs.options.seed"
+      default_value: 2314
+      help: "Seed for the random number generator."
   # Input file arguments
   inputs:
     - name: "rcmip-file"
@@ -63,11 +68,6 @@ arguments:
       mount:
         volume: "module_specific_in"
         container_path: "/mnt/module_specific_in"
-    - name: "seed"
-      type: "int"
-      source: "module_inputs.options.seed"
-      default_value: 2314
-      help: "Seed for the random number generator."
   # Output file arguments
   outputs:
     files:
