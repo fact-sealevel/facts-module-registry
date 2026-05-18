@@ -1,0 +1,195 @@
+# EMULANDICE2 AIS  MODULE CONFIGURATION
+# This YAML file describes the arguments and configuration needed to run the module.
+# It is used to generate ModuleSchema objects.
+# Based on https://github.com/fact-sealevel/emulandice/blob/main/src/emulandice2/cli.py (ais command).
+
+module_name: "emulandice2-ais"
+container_image: "ghcr.io/fact-sealevel/emulandice2:edge"
+uses_climate_file: true 
+climate_file_required: true 
+command: "main"
+input_dir_name: "emulandice2"
+
+#Argument specifications
+arguments: 
+  top_level:
+    - name: "pipeline-id"
+      type: "str" 
+      source: "metadata.pipeline-id" 
+      optional: true 
+      description: "Unique identifier for the run of this module in the experiment."
+    - name: "location-file"
+      type: "str"
+      source: "metadata.location-file"
+      optional: true
+      help: "File containing name, id, lat, and lon of points for localization"
+      mount:
+        container_path: "/mnt/shared_in"
+    - name: "scenario"
+      type: "str"
+      source: "metadata.scenario"
+      optional: false
+      help: "SSP Emissions scenario."
+    - name: "pyear-start"
+      type: "int"
+      source: "metadata.pyear-start"
+      optional: true
+      help: "Start year of the projection period."
+    - name: "pyear-end"
+      type: "int"
+      source: "metadata.pyear-end"
+      optional: true
+      help: "End year of the projection period."
+    - name: "pyear-step"
+      type: "int"
+      source: "metadata.pyear-step"
+      optional: true
+      help: "Step size for the projection period."
+    - name: "baseyear"
+      type: "int"
+      source: "metadata.baseyear"
+      optional: true
+      help: "Base year to which projections should be referenced."
+
+  options:
+    - name: "ice-source"
+      type: "str"
+      source: "module_inputs.options.ice_source"
+      optional: false
+      default_value: "AIS"
+      help: "For Antarctic Ice Sheet, ice-source is always AIS"
+    - name: "region"
+      type: "str"
+      source: "module_inputs.options.region"
+      optional: false
+      help: "Region within this ice source to use." 
+      default_value: "ALL" 
+      #allowed_values: ["ALL", "EAIS","WAIS","PEN"]
+    - name: "chunksize"
+      type: "int"
+      source: "module_inputs.options.chunksize"
+      optional: true
+      help: "Size of each chunk to process."
+    - name: "cyear-start"
+      type: "int"
+      source: "module_inputs.options.cyear_start"
+      optional: true
+      help: "Start year of the climate period."
+    - name: "cyear-end"
+      type: "int"
+      source: "module_inputs.options.cyear_end"
+      optional: true
+      help: "End year of the climate period."
+    - name: "no-rebase"
+      type: "bool"
+      source: "module_inputs.options.no_rebase"
+      optional: true
+      help: "Do not rebase samples to baseyear or regrid time."
+    - name: "seed"
+      type: "int"
+      source: "module_inputs.options.seed"
+      optional: true
+      default_value: 2024
+      help: "Random seed for reproducibility."
+
+  fingerprint_params:
+    - name: "grdfingerprintfile"
+      type: "str"
+      source: "module_inputs.fingerprint-params.grdfingerprintfile"
+      #optional: true
+      filename: "grd_fingerprintmap.yml"
+      help: "File containing the grd fingerprint."
+      mount:
+        volume: "module_specific_in"
+        container_path: "/mnt/module_specific_in"
+    - name: "fingerprint-dir"
+      type: "str"
+      source: "module_inputs.fingerprint-params.fingerprint_dir"
+      #optional: true
+      default_value: "FPRINT"
+      help: "Directory containing the fingerprint files."
+      mount:
+        volume: "module_specific_in"
+        container_path: "/mnt/module_specific_in"
+  inputs:
+    - name: "climate-data-file"
+      type: "str"
+      source: "module_inputs.inputs.climate_data_file"
+      optional: false
+      filename: "fair-temperature/climate.nc"
+      help: "Fair output or tlm data"
+      mount:
+        volume: "output"
+        container_path: "/mnt/out"
+    - name: "r-script-path"
+      type: "str"
+      source: "module_inputs.inputs.r_script_path"
+      envvar: "EMULANDICE2_R_SCRIPT_PATH"
+      help: "Path to the R script to launch emulandice2."
+      mount:
+        volume: "module_specific_input"
+        container_path: "/mnt/module_specific_in"
+    - name: "emu-file"
+      type: "str"
+      source: "module_inputs.inputs.emu_file"
+      optional: true
+      help: "Emulation file"
+      #filename_map: 
+      #  region:
+       #   ALL: AIS_ALL_Kori_PISM_BISICLES_IMAUICE_pow_exp_10_EMULATOR.RData
+        #  EAIS: AIS_EAIS_Kori_PISM_BISICLES_IMAUICE_pow_exp_10_EMULATOR.RData
+        #  WAIS: AIS_WAIS_Kori_PISM_BISICLES_IMAUICE_pow_exp_10_EMULATOR.RData
+        #  PEN: AIS_PEN_Kori_PISM_BISICLES_IMAUICE_pow_exp_10_EMULATOR.RData
+      filename: "emu_file/AIS_ALL_2300_260512_EMULATOR.RData" 
+      mount:
+        volume: "module_specific_input"
+        container_path: "/mnt/module_specific_in"
+  outputs:
+    files:
+      #- name: "output-1"
+      #  filename_map:
+      #    EAIS: ["output-1-EAIS.nc", "output-2-EAIS.nc", "output-3-EAIS.nc","output-4-EAIS.nc","output-5-EAIS.nc"]
+      #    WAIS: ["output-1-WAIS.nc", "output-2-WAIS.nc", "output-3-WAIS.nc","output-4-WAIS.nc","output-5-WAIS.nc"]
+     #     PEN: ["output-1-PEN.nc", "output-2-PEN.nc", "output-3-PEN.nc","output-4-PEN.nc","output-5-PEN.nc"]
+      - name: "output-gslr-file"
+        type: "str"
+        source: "module_inputs.outputs.output_gslr_file"
+        optional: true
+        help: "Path to the output GSLR file."
+        output_type: "global"
+        filename: "output-gslr-AIS-ALL.nc"
+        filename_map:
+          region:
+            ALL: "output-gslr-AIS-ALL.nc"
+        mount:
+          volume: "output"
+          container_path: "/mnt/out"
+          transform: "filename"
+      - name: "output-lslr-file"
+        type: "str"
+        source: "module_inputs.outputs.output_lslr_file"
+        optional: true
+        help: "Path to the output LSLR file."
+        output_type: "local"
+        filename: "output-lslr-AIS-ALL.nc"
+        #filename_map:
+        #  region:
+        #    ALL: "output-lslr-AIS-ALL.nc"
+        mount:
+          volume: "output"
+          container_path: "/mnt/out"
+          transform: "filename"
+# Volume specifications
+volumes:
+  module_specific_input:
+    host_path: "module_inputs.input_paths.module_specific_input_dir"
+    help: "Module-specific input directory"
+    container_path: "/mnt/module_specific_in"
+  shared_input:
+    host_path: "module_inputs.input_paths.shared_input_dir"
+    help: "Shared input directory (fingerprints, location file)"
+    container_path: "/mnt/shared_in"
+  output:
+    host_path: "module_inputs.output_paths.output_dir"
+    help: "Output directory for SLR files"
+    container_path: "/mnt/out"
