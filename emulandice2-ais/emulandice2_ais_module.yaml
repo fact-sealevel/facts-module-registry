@@ -63,7 +63,7 @@ arguments:
       source: "module_inputs.options.region"
       optional: false
       help: "Region within this ice source to use." 
-      default_value: "ALL" 
+      #default_value: "ALL" 
       #allowed_values: ["ALL", "EAIS","WAIS","PEN"]
     - name: "chunksize"
       type: "int"
@@ -134,33 +134,32 @@ arguments:
       source: "module_inputs.inputs.emu_file"
       optional: true
       help: "Emulation file"
-      #filename_map: 
-      #  region:
-       #   ALL: AIS_ALL_Kori_PISM_BISICLES_IMAUICE_pow_exp_10_EMULATOR.RData
-        #  EAIS: AIS_EAIS_Kori_PISM_BISICLES_IMAUICE_pow_exp_10_EMULATOR.RData
-        #  WAIS: AIS_WAIS_Kori_PISM_BISICLES_IMAUICE_pow_exp_10_EMULATOR.RData
-        #  PEN: AIS_PEN_Kori_PISM_BISICLES_IMAUICE_pow_exp_10_EMULATOR.RData
-      filename: "emu_file/AIS_ALL_2300_260512_EMULATOR.RData" 
+      multiple: true
+      filename_map:
+        keys: [pyear_end, region]
+        map:
+          2300:
+            ALL: "emu_file/AIS_ALL_2300_260601_EMULATOR.RData"
+            EAIS: "emu_file/AIS_EAIS_2300_260601_EMULATOR.RData"
+            WAIS: "emu_file/AIS_WAIS_2300_260601_EMULATOR.RData"
+            PEN: "emu_file/AIS_PEN_2300_260601_EMULATOR.RData"
+          2100:
+            ALL: "emu_file/AIS_ALL_Kori_PISM_BISICLES_IMAUICE_pow_exp_10_EMULATOR.RData"
+            EAIS: "emu_file/AIS_EAIS_Kori_PISM_BISICLES_IMAUICE_pow_exp_10_EMULATOR.RData"
+            WAIS: "emu_file/AIS_WAIS_Kori_PISM_BISICLES_IMAUICE_pow_exp_10_EMULATOR.RData"
+            PEN: "emu_file/AIS_PEN_Kori_PISM_BISICLES_IMAUICE_pow_exp_10_EMULATOR.RData"
       mount:
         volume: "module_specific_input"
         container_path: "/mnt/module_specific_in"
   outputs:
     files:
-      #- name: "output-1"
-      #  filename_map:
-      #    EAIS: ["output-1-EAIS.nc", "output-2-EAIS.nc", "output-3-EAIS.nc","output-4-EAIS.nc","output-5-EAIS.nc"]
-      #    WAIS: ["output-1-WAIS.nc", "output-2-WAIS.nc", "output-3-WAIS.nc","output-4-WAIS.nc","output-5-WAIS.nc"]
-     #     PEN: ["output-1-PEN.nc", "output-2-PEN.nc", "output-3-PEN.nc","output-4-PEN.nc","output-5-PEN.nc"]
       - name: "output-gslr-file"
         type: "str"
         source: "module_inputs.outputs.output_gslr_file"
         optional: true
         help: "Path to the output GSLR file."
         output_type: "global"
-        filename: "output-gslr-AIS-ALL.nc"
-        filename_map:
-          region:
-            ALL: "output-gslr-AIS-ALL.nc"
+        filename: "output-gslr-AIS.nc"
         mount:
           volume: "output"
           container_path: "/mnt/out"
@@ -171,7 +170,7 @@ arguments:
         optional: true
         help: "Path to the output LSLR file."
         output_type: "local"
-        filename: "output-lslr-AIS-ALL.nc"
+        filename: "output-lslr-AIS.nc"
         #filename_map:
         #  region:
         #    ALL: "output-lslr-AIS-ALL.nc"

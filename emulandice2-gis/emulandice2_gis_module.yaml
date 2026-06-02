@@ -121,9 +121,14 @@ arguments:
     - name: "emu-file"
       type: "str"
       source: "module_inputs.inputs.emu_file"
-      optional: false
+      optional: true
       help: "Path to the emulandice2 build file."
-      filename: "emu_file/GIS_ALL_CISM_pow_exp_01_EMULATOR.RData"
+      multiple: true
+      filename_map:
+        keys: [pyear_end, region]
+        map:
+          2300:
+            ALL: "emu_file/GIS_ALL_2300_260601_EMULATOR.RData"
       mount:
         volume: "module_specific_input"
         container_path: "/mnt/module_specific_in"
