@@ -1,8 +1,9 @@
 # EMULANDICE2 AIS  MODULE CONFIGURATION
 # This YAML file describes the arguments and configuration needed to run the module.
-# It is used to generate ModuleSchema objects.
+# It is used to generate ModuleSchema objects in the facts-experiment-builder (FEB) package.
 # Based on https://github.com/fact-sealevel/emulandice/blob/main/src/emulandice2/cli.py (ais command).
 
+# NOTE: 06/02/2026 - This module is using build files not yet on Zenodo
 module_name: "emulandice2-ais"
 container_image: "ghcr.io/fact-sealevel/emulandice2:edge"
 uses_climate_file: true 
