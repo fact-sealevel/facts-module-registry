@@ -36,17 +36,17 @@ arguments:
       help: "SSP Emissions scenario."
     - name: "pyear-start"
       type: "int"
-      source: "metadata.pyear-start"
+      source: "metadata.pyear_start"
       optional: true
       help: "Start year of the projection period."
     - name: "pyear-end"
       type: "int"
-      source: "metadata.pyear-end"
+      source: "metadata.pyear_end"
       optional: true
       help: "End year of the projection period."
     - name: "pyear-step"
       type: "int"
-      source: "metadata.pyear-step"
+      source: "metadata.pyear_step"
       optional: true
       help: "Step size for the projection period."
     - name: "baseyear"
