@@ -3,6 +3,9 @@
 # It is used to generate ModuleSchema objects in the facts-experiment-builder (FEB) package.
 # Based on https://github.com/fact-sealevel/emulandice2/blob/main/src/emulandice2/cli.py (--icesource=GIS).
 
+# Input data archive:
+# CHECK BACK SOON
+
 # NOTE: 06/02/2026 - This module is using build files not yet on Zenodo
 module_name: "emulandice2-gis"
 container_image: "ghcr.io/fact-sealevel/emulandice2:edge"
