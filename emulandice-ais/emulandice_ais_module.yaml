@@ -1,6 +1,6 @@
 # EMULANDICE AIS (Antarctic Ice Sheet) MODULE CONFIGURATION
 # This YAML file describes the arguments and configuration needed to run the module.
-# It is used to generate ModuleSchema objects.
+# It is used to generate ModuleSchema objects in the facts-experiment-builder (FEB) package.
 # Based on https://github.com/fact-sealevel/emulandice/blob/main/src/emulandice/cli.py (ais command).
 
 module_name: "emulandice-ais"

@@ -1,8 +1,9 @@
 # EMULANDICE2 glaciers  MODULE CONFIGURATION
 # This YAML file describes the arguments and configuration needed to run the module.
-# It is used to generate ModuleSchema objects.
+# It is used to generate ModuleSchema objects in the facts-experiment-builder (FEB) package.
 # Based on https://github.com/fact-sealevel/emulandice/blob/main/src/emulandice2/cli.py (ais command).
 
+# NOTE: 06/02/2026 - This module is using build files not yet on Zenodo
 module_name: "emulandice2-glaciers"
 container_image: "ghcr.io/fact-sealevel/emulandice2:edge"
 uses_climate_file: true 
@@ -17,11 +18,11 @@ arguments:
       source: "metadata.pipeline-id"
       optional: true
       help: "Unique identifier for this instance of the module"
-#    - name: "baseyear"
-#      type: "int"
-#      source: "metadata.baseyear"
-#      optional: true
-#      help: "Base year to which projections should be referenced"
+    - name: "baseyear"
+      type: "int"
+      source: "metadata.baseyear"
+      optional: true
+      help: "Base year to which projections should be referenced"
     - name: "location-file"
       type: "str"
       source: "metadata.location-file"
@@ -66,7 +67,6 @@ arguments:
       source: "module_inputs.options.region"
       optional: false
       help: "Region within ice source to use." 
-      default_value: "RGI01" 
       #allowed_values: ["RGI01", "RGI02", "RGI03", "RGI04", "RGI05", "RGI06", "RGI07", 
       #                 "RGI08", "RGI09", "RGI10", "RGI11", "RGI12", "RGI13", "RGI14", 
       #                 "RGI15", "RGI16", "RGI17", "RGI18", "RGI19"]
@@ -135,28 +135,30 @@ arguments:
       source: "module_inputs.inputs.emu_file"
       optional: false
       help: "Path to the emulandice2 build file."
-      #filename_map:
-      #  region:
-      #    RGI01: GLA_RGI01_GloGEM_OGGM_GO_pow_exp_01_EMULATOR.RData
-      #    RGI02: GLA_RGI02_GloGEM_OGGM_GO_pow_exp_20_EMULATOR.RData
-      #    RGI03: GLA_RGI03_GloGEM_OGGM_GO_pow_exp_01_EMULATOR.RData
-      #    RGI04: GLA_RGI04_GloGEM_OGGM_GO_pow_exp_01_EMULATOR.RData
-      #    RGI05: GLA_RGI05_GloGEM_OGGM_GO_pow_exp_01_EMULATOR.RData
-       #   RGI06: GLA_RGI06_GloGEM_OGGM_GO_pow_exp_20_EMULATOR.RData
-       #   RGI07: GLA_RGI07_GloGEM_OGGM_GO_pow_exp_01_EMULATOR.RData
-       #   RGI08: GLA_RGI08_GloGEM_OGGM_GO_pow_exp_20_EMULATOR.RData
-       #   RGI09: GLA_RGI09_GloGEM_OGGM_GO_pow_exp_10_EMULATOR.RData
-      #    RGI10: GLA_RGI10_GloGEM_OGGM_GO_pow_exp_20_EMULATOR.RData
-      #    RGI11: GLA_RGI11_GloGEM_OGGM_GO_pow_exp_20_EMULATOR.RData
-      #    RGI12: GLA_RGI12_GloGEM_OGGM_GO_pow_exp_20_EMULATOR.RData
-      #    RGI13: GLA_RGI13_GloGEM_OGGM_GO_pow_exp_20_EMULATOR.RData
-      #    RGI14: GLA_RGI14_GloGEM_OGGM_GO_pow_exp_20_EMULATOR.RData
-      #    RGI15: GLA_RGI15_GloGEM_OGGM_GO_pow_exp_20_EMULATOR.RData
-      #    RGI16: GLA_RGI16_GloGEM_OGGM_GO_pow_exp_20_EMULATOR.RData
-      #    RGI17: GLA_RGI17_GloGEM_OGGM_GO_pow_exp_10_EMULATOR.RData
-      #    RGI18: GLA_RGI18_GloGEM_OGGM_GO_pow_exp_20_EMULATOR.RData
-      #    RGI19: GLA_RGI19_GloGEM_OGGM_GO_pow_exp_01_EMULATOR.RData
-      filename: "emu_file/GLA_RGI01_GloGEM_OGGM_GO_pow_exp_01_EMULATOR.RData"
+      multiple: true
+      filename_map:
+        keys: [pyear_end, region]
+        map:
+          2300:
+            RGI01: "emu_file/GLA_RGI01_2300_260601_EMULATOR.RData"
+            RGI02: "emu_file/GLA_RGI02_2300_260601_EMULATOR.RData"
+            RGI03: "emu_file/GLA_RGI03_2300_260601_EMULATOR.RData"
+            RGI04: "emu_file/GLA_RGI04_2300_260601_EMULATOR.RData"
+            RGI05: "emu_file/GLA_RGI05_2300_260601_EMULATOR.RData"
+            RGI06: "emu_file/GLA_RGI06_2300_260601_EMULATOR.RData"
+            RGI07: "emu_file/GLA_RGI07_2300_260601_EMULATOR.RData"
+            RGI08: "emu_file/GLA_RGI08_2300_260601_EMULATOR.RData"
+            RGI09: "emu_file/GLA_RGI09_2300_260601_EMULATOR.RData"
+            RGI10: "emu_file/GLA_RGI10_2300_260601_EMULATOR.RData"
+            RGI11: "emu_file/GLA_RGI11_2300_260601_EMULATOR.RData"
+            RGI12: "emu_file/GLA_RGI12_2300_260601_EMULATOR.RData"
+            RGI13: "emu_file/GLA_RGI13_2300_260601_EMULATOR.RData"
+            RGI14: "emu_file/GLA_RGI14_2300_260601_EMULATOR.RData"
+            RGI15: "emu_file/GLA_RGI15_2300_260601_EMULATOR.RData"
+            RGI16: "emu_file/GLA_RGI16_2300_260601_EMULATOR.RData"
+            RGI17: "emu_file/GLA_RGI17_2300_260601_EMULATOR.RData"
+            RGI18: "emu_file/GLA_RGI18_2300_260601_EMULATOR.RData"
+            RGI19: "emu_file/GLA_RGI19_2300_260601_EMULATOR.RData"
       mount:
         volume: "module_specific_in"
         container_path: "/mnt/module_specific_in"
@@ -168,28 +170,7 @@ arguments:
         optional: true
         help: "Path to the output GSLR file."
         output_type: "global"
-        filename: "output-gslr-GLAC-ALL.nc"
-        filename_map:
-          region:
-            RGI01: "output-gslr-GLAC-RGI01.nc"
-            RGI02: "output-gslr-GLAC-RGI02.nc"
-            RGI03: "output-gslr-GLAC-RGI03.nc"
-            RGI04: "output-gslr-GLAC-RGI04.nc"
-            RGI05: "output-gslr-GLAC-RGI05.nc"
-            RGI06: "output-gslr-GLAC-RGI06.nc"
-            RGI07: "output-gslr-GLAC-RGI07.nc"
-            RGI08: "output-gslr-GLAC-RGI08.nc"
-            RGI09: "output-gslr-GLAC-RGI09.nc"
-            RGI10: "output-gslr-GLAC-RGI10.nc"
-            RGI11: "output-gslr-GLAC-RGI11.nc"
-            RGI12: "output-gslr-GLAC-RGI12.nc"
-            RGI13: "output-gslr-GLAC-RGI13.nc"
-            RGI14: "output-gslr-GLAC-RGI14.nc"
-            RGI15: "output-gslr-GLAC-RGI15.nc"
-            RGI16: "output-gslr-GLAC-RGI16.nc"
-            RGI17: "output-gslr-GLAC-RGI17.nc"
-            RGI18: "output-gslr-GLAC-RGI18.nc"
-            RGI19: "output-gslr-GLAC-RGI19.nc"
+        filename: "output-gslr-GLAC.nc"
         mount:
           volume: "output"
           container_path: "/mnt/out"
@@ -200,28 +181,7 @@ arguments:
         optional: true
         help: "Path to the output LSLR file."
         output_type: "local"
-        filename: "output-lslr-GLAC-ALL.nc"
-        filename_map:
-          region:
-            RGI01: "output-lslr-GLAC-RGI01.nc"
-            RGI02: "output-lslr-GLAC-RGI02.nc"
-            RGI03: "output-lslr-GLAC-RGI03.nc"
-            RGI04: "output-lslr-GLAC-RGI04.nc"
-            RGI05: "output-lslr-GLAC-RGI05.nc"
-            RGI06: "output-lslr-GLAC-RGI06.nc"
-            RGI07: "output-lslr-GLAC-RGI07.nc"
-            RGI08: "output-lslr-GLAC-RGI08.nc"
-            RGI09: "output-lslr-GLAC-RGI09.nc"
-            RGI10: "output-lslr-GLAC-RGI10.nc"
-            RGI11: "output-lslr-GLAC-RGI11.nc"
-            RGI12: "output-lslr-GLAC-RGI12.nc"
-            RGI13: "output-lslr-GLAC-RGI13.nc"
-            RGI14: "output-lslr-GLAC-RGI14.nc"
-            RGI15: "output-lslr-GLAC-RGI15.nc"
-            RGI16: "output-lslr-GLAC-RGI16.nc"
-            RGI17: "output-lslr-GLAC-RGI17.nc"
-            RGI18: "output-lslr-GLAC-RGI18.nc"
-            RGI19: "output-lslr-GLAC-RGI19.nc"
+        filename: "output-lslr-GLAC.nc"
         mount:
           volume: "output"
           container_path: "/mnt/out"
