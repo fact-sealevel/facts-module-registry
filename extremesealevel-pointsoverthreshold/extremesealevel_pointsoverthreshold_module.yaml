@@ -2,6 +2,9 @@
 # Based on https://github.com/fact-sealevel/extremesealevel-pointsoverthreshold
 # Fits GPD on GESLA2 data, uses total module output, generates return curves and allowances.
 
+# Input data archive:
+# https://zenodo.org/record/7478192/files/extremesealevel_pointsoverthreshold_fulldata.tgz
+
 module_name: "extremesealevel-pointsoverthreshold"
 container_image: "ghcr.io/fact-sealevel/extremesealevel-pointsoverthreshold:0.1.0"
 uses_climate_file: false

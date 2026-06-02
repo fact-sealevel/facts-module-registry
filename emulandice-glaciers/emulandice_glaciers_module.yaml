@@ -3,6 +3,9 @@
 # It is used to generate ModuleSchema objects in the facts-experiment-builder (FEB) package.
 # Based on https://github.com/fact-sealevel/emulandice/blob/main/src/emulandice/cli.py (glaciers command).
 
+# Input data archive:
+# https://zenodo.org/record/7478192/files/grd_fingerprints_data.tgz
+
 module_name: "emulandice-glaciers"
 container_image: "ghcr.io/fact-sealevel/emulandice:0.1.1"
 uses_climate_file: true
