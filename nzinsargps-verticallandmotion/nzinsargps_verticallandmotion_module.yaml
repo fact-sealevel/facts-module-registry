@@ -47,6 +47,7 @@ arguments:
       source: "metadata.location-file"
       optional: true
       help: "File containing name, id, lat, and lon of points for localization"
+      transform: "filename"
       mount:
         container_path: "/mnt/shared_in"
 
