@@ -32,7 +32,7 @@ Each `*_module.yaml` defines everything FEB needs to configure and run that modu
 
 The `arguments` section is the most important part for users: it defines every parameter name, input filename, and output filename the module expects. When you run `setup-experiment`, FEB reads this section to populate your `experiment-config.yaml` with the correct fields.
 
-See the [module contributor docs](#) (TODO ADD!) for a full schema reference and guide to writing or updating a module YAML.
+See the [module contributor docs](module_contributor_documentation.md) for a full schema reference and guide to writing or updating a module YAML.
 
 ---
 
@@ -118,4 +118,4 @@ To register a new module or update an existing one:
 2. Add (or update) the `*_module.yaml` inside it
 3. Open a pull request against this repo
 
-See the [module contributor docs](#) (TODO ADD!) for the full YAML schema and validation guidance.
+See the [module contributor docs](module_contributor_documentation.md) for the full YAML schema and validation guidance.
