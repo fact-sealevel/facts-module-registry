@@ -14,8 +14,6 @@ facts-module-registry/
 │   └── fair_temperature_module.yaml
 ├── bamber19-icesheets/
 │   └── bamber19_icesheets_module.yaml
-├── facts-total/
-│   └── facts_total_module.yaml
 └── ...
 ```
 
@@ -38,11 +36,11 @@ See the [module contributor docs](module_contributor_documentation.md) for a ful
 
 ## How to set up your workspace
 
-`facts-module-registry` is designed to live in your FACTS project workspace alongside your experiments. Clone it into the root of your workspace:
+`facts-module-registry` is designed to live in your FACTS project workspace alongside your experiments. Run [`feb init`](https://github.com/fact-sealevel/facts-experiment-builder/blob/main/docs/QUICKSTART.md#i-initialize-your-workspace) in a fresh directory to setup the workspace. 
 
 ```bash
 # From your FACTS project workspace root
-git clone https://github.com/fact-sealevel/facts-module-registry.git
+uvx --from git+https://github.com/fact-sealevel/facts-experiment-builder@main feb init
 ```
 
 Your workspace should look like this:
