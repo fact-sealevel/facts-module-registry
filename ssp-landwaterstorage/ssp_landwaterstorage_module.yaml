@@ -9,7 +9,7 @@
 # https://zenodo.org/record/7478192/files/ssp_landwaterstorage_preprocess_data.tgz
 
 module_name: "ssp-landwaterstorage"
-container_image: "ghcr.io/fact-sealevel/ssp-landwaterstorage:0.2.0"
+container_image: "ghcr.io/fact-sealevel/ssp-landwaterstorage:0.2.1"
 uses_climate_file: false
 climate_file_required: false
 command: "main"
