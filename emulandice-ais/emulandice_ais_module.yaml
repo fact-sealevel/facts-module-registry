@@ -7,7 +7,7 @@
 # https://zenodo.org/record/7478192/files/grd_fingerprints_data.tgz
 
 module_name: "emulandice-ais"
-container_image: "ghcr.io/fact-sealevel/emulandice:0.1.1"
+container_image: "ghcr.io/fact-sealevel/emulandice:0.2.0"
 uses_climate_file: true
 climate_file_required: true
 command: "ais"
