@@ -22,12 +22,12 @@ arguments:
       type: "int"
       source: "metadata.nsamps"
       optional: true
+
+  options:
     - name: "target-years"
       type: "str"
       source: "module_inputs.options.target_years"
       optional: true
-
-  options:
     - name: "min-days"
       type: "int"
       source: "module_inputs.options.min_days"
