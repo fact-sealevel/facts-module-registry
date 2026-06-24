@@ -97,7 +97,7 @@ arguments:
         volume: "module_specific_in"
         container_path: "/mnt/module_specific_in"
     - name: "zosdir"
-      type: "str"
+      type: "dir"
       source: "module_inputs.inputs.zosdir"
       help: "Path to CMIP6 ZOS directory"
       default_value: "cmip6/zos/"

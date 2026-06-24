@@ -5,7 +5,7 @@
 # TODO ADD
 
 module_name: "extremesealevel2-afs"
-container_image: TODO ADD
+container_image: extremesealevel2-afs:fix_blame3
 uses_climate_file: false
 climate_file_required: false
 command: "main"
@@ -121,7 +121,7 @@ arguments:
         volume: "input"
         container_path: "/mnt/module_specific_in"
     - name: "esl-data-path"
-      type: "str"
+      type: "dir"
       source: "module_inputs.inputs.esl_data_path"
       default_value: "extremesealevel2_AFs_fulldata/esl_data/gesla3_data"
       help: "Directory containing requested ESL data."
@@ -133,12 +133,14 @@ arguments:
         source: "module_inputs.outputs.output_fname"
         filename: "project_ESL_output.nc"
         help: "Path to output ESL AFs file."
+        output_type: local
         mount:
           volume: "output"
           container_path: "/mnt/out"
           transform: "filename"
       - name: "esl-fit-statistics-file"
         type: "file"
+        output_type: local
         source: "module_inputs.outputs.esl_fit_statistics_file"
         filename: "esl_fit_statistics_ds.nc"
         help: "Path to output ESL statistics file."
@@ -146,6 +148,7 @@ arguments:
           volume: "output"
           container_path: "/mnt/out"
           transform: "filename"
+    other:
       - name: "output-dir"
         type: "str"
         source: "module_inputs.outputs.output_dir"
