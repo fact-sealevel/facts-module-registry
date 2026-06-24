@@ -5,7 +5,7 @@
 # TODO ADD
 
 module_name: "extremesealevel2-afs"
-container_image: extremesealevel2-afs:fix_blame3
+container_image: "ghcr.io/fact-sealevel/extremesealevel2-afs:0.1.0
 uses_climate_file: false
 climate_file_required: false
 command: "main"
