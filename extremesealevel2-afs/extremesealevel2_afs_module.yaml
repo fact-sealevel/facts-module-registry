@@ -1,0 +1,170 @@
+# EXTREMESEALEVEL2 AFS MODULE CONFIGURATION
+# Based on https://github.com/fact-sealevel/extremesealevel2-afs
+
+# Input data archive:
+# TODO ADD
+
+module_name: "extremesealevel2-afs"
+container_image: TODO ADD
+uses_climate_file: false
+climate_file_required: false
+command: "main"
+
+# Argument specifications
+arguments:
+  top_level: 
+    - name: "pipeline-id"
+      type: "str"
+      source: "metadata.pipeline-id"
+      optional: true
+    - name: "nsamps"
+      type: "int"
+      source: "metadata.nsamps"
+      optional: true
+  
+  options:
+    - name: "min-years"
+      type: "int"
+      source: "module_inputs.options.min_years"
+      help: "Minimum number of years available."
+    - name: "resample-freq"
+      type: "str"
+      source: "module_inputs.options.resample_freq"
+      default_value: "D_max"
+      help: "Frequency to resample the raw data to prior to ESL analysis"
+    - name: "deseasonalize"
+      type: "bool"
+      source: "module_inputs.options.deseasonalize"
+      default_value: true
+      help: "Boolean to indicate whehter to remove mean seasonal cycle prior to ESL analysis."
+    - name: "detrend"
+      type: "bool"
+      source: "module_inputs.options.detrend"
+      default_value: true
+      help: "Boolean to indicate whether to remove linear trend prior to ESL analysis."
+    - name: "subtract-amean"
+      type: "bool"
+      source: "module_inputs.options.subtract_amean"
+      default_value: false
+      help: "Boolean to indicate whetehr to remove annual means prior to ESL analysis"
+    - name: "match-lim"
+      type: "float"
+      default_value: 10.0
+      source: "module_inputs.options.match_lim"
+      help: "Radius around requested locations to find a matching tide gause in GESLA database (km)"
+    - name: "gpd-pot-threshold"
+      type: "float"
+      default_value: 99.0
+      source: "module_inputs.options.gpd_pot_threshold"
+      help: "Precentile for GPD analysis"
+    - name: "decluster-window"
+      type: "int"
+      default_value: 3
+      source: "module_inputs.options.decluster_window"
+      help: "Maximum number of days that define a cluster for extreme events."
+    - name: "decluster-method"
+      type: "str"
+      default_value: "rolling_max"
+      source: "module_inputs.options.decluster_method"
+      help: "Method to use for declustering peaks"
+    - name: "reffreq-data"
+      type: "str"
+      source: "module_inputs.options.reffreq_data"
+      default_value: 0.01
+      help: "Which protection level frequencies data to use"
+    - name: "target-AFs"
+      type: "int"
+      source: "module_inputs.options.target_AFs"
+      default_value: 20
+      help: "Comma-delimited list to AFs to project timing for (set to none for no output)."
+    - name: "target-freqs"
+    - name: "below-threshold"
+    - name: "quantile-min"
+      type: "float"
+      source: "module_inputs.options.quantile_min"
+      default_value: 0.5
+      help: "Minimum quantile to assess"
+    - name: "quantile-max"
+      type: "float"
+      source: "module_inputs.options.quantile_max"
+      default_value: 0.99
+      help: "Maximum quantile to assess"
+    - name: "quantile-step"
+      type: "float"
+      source: "module_inputs.options.quantile_step"
+      default_value: 0.01
+      help: "Quantile step"
+    - name: "target-years"
+      type: "str"
+      source: "module_inputs.options.target_years"
+      default_value: "2050,2100"
+      help: "Comma-delimited list of years to project AFs for (set to none for no output)."
+    - name: "esl-data"
+      type: "str"
+      source: "module_inputs.options.esl_data"
+      default_value: "gesla3"
+      help: "Type of data used for the ESL analysis."
+  inputs:
+    - name: "total-localsl-file"
+      type: "file"
+      source: "module_inputs.inputs.total_localsl_file"
+      mount: 
+        volume: "output"
+        container_path: "/mnt/out"
+      external_volume: true
+      help: "NetCDF file containing local sea level projections at the locations of interest"
+    - name: "reffreq-data-file"
+      type: "file"
+      source: "module_inputs.inputs.reffreq_data_file"
+      filename: "refFreqs/flopros_estimates_at_coastrp_locations.nc"
+      mount:
+        volume: "input"
+        container_path: "/mnt/module_specific_in"
+    - name: "esl-data-path"
+      type: "str"
+      source: "module_inputs.inputs.esl_data_path"
+      default_value: "extremesealevel2_AFs_fulldata/esl_data/gesla3_data"
+      help: "Directory containing requested ESL data."
+
+  outputs:
+    files:
+      - name: "output-fname"
+        type: "file"
+        source: "module_inputs.outputs.output_fname"
+        filename: "project_ESL_output.nc"
+        help: "Path to output ESL AFs file."
+        mount:
+          volume: "output"
+          container_path: "/mnt/out"
+          transform: "filename"
+      - name: "esl-fit-statistics-file"
+        type: "file"
+        source: "module_inputs.outputs.esl_fit_statistics_file"
+        filename: "esl_fit_statistics_ds.nc"
+        help: "Path to output ESL statistics file."
+        mount: 
+          volume: "output"
+          container_path: "/mnt/out"
+          transform: "filename"
+      - name: "output-dir"
+        type: "str"
+        source: "module_inputs.outputs.output_dir"
+        help: "Directory to save output files."
+        mount:
+          volume: "output"
+          container_path: "/mnt/out"
+
+# Volume specifications
+volumes:
+  module_specific_input:
+    host_path: "module_inputs.input_paths.module_specific_input_dir"
+    help: "Module-specific input directory"
+    container_path: "/mnt/module_specific_in"
+  shared_input:
+    host_path: "module_inputs.input_paths.shared_input_dir"
+    help: "Shared input directory"
+    container_path: "/mnt/shared_in"
+  output:
+    host_path: "module_inputs.output_paths.output_dir"
+    help: "Output directory for ESL AFs file and statistics file"
+    container_path: "/mnt/out"
