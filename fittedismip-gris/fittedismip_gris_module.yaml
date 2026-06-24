@@ -110,7 +110,7 @@ arguments:
       help: "TO DO ADD HELP TEXT"
       filename: "fair-temperature/climate.nc"
       mount:
-        volume: "out" # Implicit dependency: needs fair output
+        volume: "output" # Implicit dependency: needs fair output
         container_path: "/mnt/out"
         transform: "filename"
       external_volume: true # Indicates this comes from an external module
