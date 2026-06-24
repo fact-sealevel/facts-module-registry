@@ -109,7 +109,7 @@ arguments:
         transform: "filename"
       external_volume: true # Indicates this comes from an external module
     - name: "model-dir"
-      type: "str"
+      type: "dir"
       source: "module_inputs.inputs.model_dir"
       help: "TO DO ADD HELP TEXT"
       default_value: "cmip6/"
