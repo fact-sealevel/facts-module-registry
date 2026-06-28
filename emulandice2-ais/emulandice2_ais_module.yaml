@@ -21,7 +21,7 @@ arguments:
       type: "str" 
       source: "metadata.pipeline-id" 
       optional: true 
-      description: "Unique identifier for the run of this module in the experiment."
+      help: "Unique identifier for the run of this module in the experiment."
     - name: "location-file"
       type: "str"
       source: "metadata.location-file"
@@ -30,6 +30,7 @@ arguments:
       transform: "filename"
       mount:
         container_path: "/mnt/shared_in"
+        volume: "input"
     - name: "scenario"
       type: "str"
       source: "metadata.scenario"
@@ -101,7 +102,7 @@ arguments:
     - name: "grdfingerprintfile"
       type: "str"
       source: "module_inputs.fingerprint-params.grdfingerprintfile"
-      #optional: true
+      optional: false
       filename: "grd_fingerprintmap.yml"
       help: "File containing the grd fingerprint."
       mount:
@@ -110,7 +111,7 @@ arguments:
     - name: "fingerprint-dir"
       type: "str"
       source: "module_inputs.fingerprint-params.fingerprint_dir"
-      #optional: true
+      optional: false
       default_value: "FPRINT"
       help: "Directory containing the fingerprint files."
       mount:
@@ -121,7 +122,7 @@ arguments:
       type: "str"
       source: "module_inputs.inputs.climate_data_file"
       optional: false
-      filename: "fair-temperature/climate.nc"
+      climate_output_type: "output-climate-file"
       help: "Fair output or tlm data"
       mount:
         volume: "output"
@@ -164,7 +165,8 @@ arguments:
         optional: true
         help: "Path to the output GSLR file."
         output_type: "global"
-        filename: "output-gslr-AIS.nc"
+        #filename: "output-gslr-AIS.nc"
+        pass_to_total: true
         mount:
           volume: "output"
           container_path: "/mnt/out"
@@ -176,6 +178,7 @@ arguments:
         help: "Path to the output LSLR file."
         output_type: "local"
         filename: "output-lslr-AIS.nc"
+        pass_to_total: true
         #filename_map:
         #  region:
         #    ALL: "output-lslr-AIS-ALL.nc"

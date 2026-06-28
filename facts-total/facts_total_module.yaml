@@ -62,7 +62,7 @@ arguments:
 
   # Output file arguments
   outputs:
-    other:
+    files:
       - name: "output-path"
         type: "file"
         source: "module_inputs.outputs.output_path"

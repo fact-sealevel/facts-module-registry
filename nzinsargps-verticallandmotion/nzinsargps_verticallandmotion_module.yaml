@@ -93,6 +93,7 @@ arguments:
     files:
       - name: "output-lslr-file"
         type: "file"
+        pass_to_total: true
         source: "module_inputs.outputs.output_lslr_file"
         filename: "lslr.nc"
         help: "TO DO ADD HELP TEXT"

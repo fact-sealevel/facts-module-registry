@@ -94,6 +94,7 @@ arguments:
       type: "int"
       source: "module_inputs.options.seed"
       default_value: 4321
+      optional: false
       help: "Seed for the random number generator."
 
   # Input file arguments
@@ -101,7 +102,8 @@ arguments:
     - name: "climate-data-file"
       type: "file"
       source: "module_inputs.inputs.climate_data_file"
-      filename: "fair-temperature/climate.nc"
+      #filename: "fair-temperature/climate.nc"
+      climate_output_type: "output-climate-file"
       help: "TO DO ADD HELP TEXT"
       mount:
         volume: "output" # Implicit dependency: needs fair output
@@ -141,6 +143,7 @@ arguments:
         source: "module_inputs.outputs.output_gslr_file"
         filename: "gslr.nc"
         output_type: "global"
+        pass_to_total: true
         help: "TO DO ADD HELP TEXT"
         mount:
           volume: "output"
@@ -151,6 +154,7 @@ arguments:
         source: "module_inputs.outputs.output_lslr_file"
         filename: "lslr.nc"
         output_type: "local"
+        pass_to_total: true
         help: "TO DO ADD HELP TEXT"
         mount:
           volume: "output"

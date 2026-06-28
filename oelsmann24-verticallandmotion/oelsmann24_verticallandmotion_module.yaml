@@ -49,6 +49,7 @@ arguments:
       help: "File containing name, id, lat, and lon of points for localization"
       mount:
         container_path: "/mnt/shared_in"
+        volume: "input"
 
   # Module-specific options
   options:
@@ -62,6 +63,7 @@ arguments:
       type: "int"
       source: "module_inputs.options.seed"
       default_value: 1234
+      optional: false
       help: "Seed for the random number generator."
 
   # Input file arguments
@@ -112,6 +114,7 @@ arguments:
     files:
       - name: "output-lslr-file"
         type: "file"
+        pass_to_total: true
         source: "module_inputs.outputs.output_lslr_file"
         filename: "lslr.nc"
         output_type: "local"

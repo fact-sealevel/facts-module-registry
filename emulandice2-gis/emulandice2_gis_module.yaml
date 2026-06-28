@@ -20,7 +20,7 @@ arguments:
       type: "str" 
       source: "metadata.pipeline-id" 
       optional: true 
-      description: "Unique identifier for the run of this module in the experiment."
+      help: "Unique identifier for the run of this module in the experiment."
     - name: "location-file"
       type: "str"
       source: "metadata.location-file"
@@ -29,6 +29,7 @@ arguments:
       transform: "filename"
       mount:
         container_path: "/mnt/shared_in"
+        volume: "input"
     - name: "scenario"
       type: "str"
       source: "metadata.scenario"
@@ -93,6 +94,7 @@ arguments:
       source: "module_inputs.options.seed"
       default_value: 2024
       help: "Random seed for reproducibility."
+      optional: false
   fingerprint_params:
     - name: "grdfingerprintfile"
       type: "str"
@@ -115,9 +117,9 @@ arguments:
   inputs:
     - name: "climate-data-file"
       type: "str"
-      source: "module_inputs.inputs.climate-data-file"
+      source: "module_inputs.inputs.climate_data_file"
       optional: false
-      filename: "fair-temperature/climate.nc"
+      climate_output_type: "output-climate-file"
       help: "Path to climate data file to be used in experiment (usually output of climate step or supplied alt. fair data)."
       mount:
         volume: "output"
@@ -146,6 +148,7 @@ arguments:
         help: "Path at which to write the output GSLR file."
         output_type: "global"
         filename: "output-gslr-GIS-ALL.nc"
+        pass_to_total: true
         filename_map:
           region:
             ALL: "output-gslr-gris-ALL.nc"
@@ -160,6 +163,7 @@ arguments:
         help: "Path at which to write the output LSLR file."
         output_type: "local"
         filename: "output-lslr-GIS-ALL.nc"
+        pass_to_total: true
         filename_map:
           region:
             ALL: "output-lslr-gris-ALL.nc"

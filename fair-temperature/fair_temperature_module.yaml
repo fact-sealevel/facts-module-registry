@@ -53,6 +53,7 @@ arguments:
       type: "int"
       source: "module_inputs.options.seed"
       default_value: 2314
+      optional: false
       help: "Seed for the random number generator."
   # Input file arguments
   inputs:

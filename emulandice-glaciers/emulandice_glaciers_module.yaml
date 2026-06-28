@@ -65,7 +65,8 @@ arguments:
       type: "file"
       source: "module_inputs.inputs.input_data_file"
       help: "Full path for temperature trajectory input file"
-      filename: "fair-temperature/gsat.nc"
+      #filename: "fair-temperature/gsat.nc"
+      climate_output_type: "output-climate-file"
       mount:
         volume: "output"
         container_path: "/mnt/out"
@@ -88,6 +89,7 @@ arguments:
         filename: "output-gslr.nc"
         help: "Path to write output global SLR file"
         output_type: "global"
+        pass_to_total: true
         mount:
           volume: "output"
           container_path: "/mnt/out"
@@ -98,6 +100,7 @@ arguments:
         filename: "output-lslr.nc"
         help: "Path to write output local SLR file"
         output_type: "local"
+        pass_to_total: true
         mount:
           volume: "output"
           container_path: "/mnt/out"
