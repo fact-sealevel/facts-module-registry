@@ -62,6 +62,7 @@ arguments:
       transform: "filename"
       mount:
         container_path: "/mnt/shared_in"
+        volume: "input"
 
   # Module-specific options
   options:
@@ -110,7 +111,7 @@ arguments:
       source: "module_inputs.inputs.climate_data_file"
       help: "TO DO ADD HELP TEXT"
       #filename: "fair-temperature/climate.nc"
-      climate_output_type: "output-climate-file"
+      climate_step_output: "output-climate-file"
       mount:
         volume: "output" # Implicit dependency: needs fair output
         container_path: "/mnt/out"
