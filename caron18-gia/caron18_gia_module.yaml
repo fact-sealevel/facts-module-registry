@@ -49,6 +49,7 @@ arguments:
       transform: "filename"
       mount:
         container_path: "/mnt/shared_in"
+        volume: "input"
 
   # Module-specific options
   options:
@@ -62,6 +63,7 @@ arguments:
       type: "int"
       source: "module_inputs.options.seed"
       default_value: 1234
+      optional: false
       help: "Seed for the random number generator."
 
   # Input file arguments
@@ -84,6 +86,7 @@ arguments:
         filename: "lslr.nc"
         output_type: "local"
         help: "Output local sea-level rise projections file"
+        pass_to_total: true
         mount:
           volume: "output"
           container_path: "/mnt/out"
@@ -94,6 +97,7 @@ arguments:
         filename: "quantiles.nc"
         output_type: "local"
         help: "Output quantiles file"
+        pass_to_total: false
         mount:
           volume: "output"
           container_path: "/mnt/out"

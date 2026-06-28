@@ -34,6 +34,7 @@ arguments:
       transform: "filename"
       mount:
         container_path: "/mnt/shared_in"
+        volume: "input"
     - name: "scenario"
       type: "str"
       source: "metadata.scenario"
@@ -98,6 +99,7 @@ arguments:
       type: "int"
       source: "module_inputs.options.seed"
       default_value: 2024
+      optional: false
       help: "Random seed for reproducibility."
   fingerprint_params:
     - name: "grdfingerprintfile"
@@ -123,7 +125,7 @@ arguments:
       type: "str"
       source: "module_inputs.inputs.climate_data_file"
       optional: false
-      filename: "fair-temperature/climate.nc"
+      climate_output_type: "output-climate-file"
       help: "Fair output or tlm data"
       mount:
         volume: "output"
@@ -174,6 +176,7 @@ arguments:
         optional: true
         help: "Path to the output GSLR file."
         output_type: "global"
+        pass_to_total: true
         filename: "output-gslr-GLAC.nc"
         mount:
           volume: "output"
@@ -186,6 +189,7 @@ arguments:
         help: "Path to the output LSLR file."
         output_type: "local"
         filename: "output-lslr-GLAC.nc"
+        pass_to_total: true
         mount:
           volume: "output"
           container_path: "/mnt/out"

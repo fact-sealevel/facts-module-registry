@@ -110,6 +110,7 @@ arguments:
       optional: true
     - name: "seed"
       type: "int"
+      optional: false
       source: "module_inputs.options.seed"
       default_value: 2413
       help: "Seed for the random number generator."

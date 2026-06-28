@@ -99,6 +99,7 @@ arguments:
       type: "int"
       source: "module_inputs.options.seed"
       default_value: 1423
+      optional: false
       help: "Seed for the random number generator."
 
   fingerprint_params:
@@ -116,7 +117,8 @@ arguments:
       type: "file"
       source: "module_inputs.inputs.climate_data_file"
       help: "NetCDF4/HDF5 file containing surface temperature data (this should be a fair output)"
-      filename: "fair-temperature/climate.nc"
+      #filename: "fair-temperature/climate.nc"
+      climate_output_type: "output-climate-file"
       mount:
         volume: "output" # Implicit dependency: needs fair output
         container_path: "/mnt/out"
@@ -136,6 +138,7 @@ arguments:
     files:
       - name: "global-gis-output-file"
         type: "file"
+        pass_to_total: true
         source: "module_inputs.outputs.global_gis_output_file"
         filename: "global-gis-output.nc"
         help: "Path to global GIS output sea-level file"
@@ -146,6 +149,7 @@ arguments:
           transform: "filename"
       - name: "global-ais-output-file"
         type: "file"
+        pass_to_total: true
         source: "module_inputs.outputs.global_ais_output_file"
         filename: "global-ais-output.nc"
         help: "Path to global AIS output sea-level file"
@@ -156,6 +160,7 @@ arguments:
           transform: "filename"
       - name: "global-wais-output-file"
         type: "file"
+        pass_to_total: false
         source: "module_inputs.outputs.global_wais_output_file"
         filename: "global-wais-output.nc"
         help: "Path to global WAIS output sea-level file"
@@ -166,6 +171,7 @@ arguments:
           transform: "filename"
       - name: "global-eais-output-file"
         type: "file"
+        pass_to_total: false
         source: "module_inputs.outputs.global_eais_output_file"
         filename: "global-eais-output.nc"
         help: "Path to global EAIS output sea-level file"
@@ -176,6 +182,7 @@ arguments:
           transform: "filename"
       - name: "local-gis-output-file"
         type: "file"
+        pass_to_total: true
         source: "module_inputs.outputs.local_gis_output_file"
         filename: "local-gis-output.nc"
         help: "Path to local GIS output sea-level file"
@@ -187,6 +194,7 @@ arguments:
         optional: true
       - name: "local-ais-output-file"
         type: "file"
+        pass_to_total: true
         source: "module_inputs.outputs.local_ais_output_file"
         filename: "local-ais-output.nc"
         help: "Path to local AIS output sea-level file"
@@ -198,6 +206,7 @@ arguments:
         optional: true
       - name: "local-wais-output-file"
         type: "file"
+        pass_to_total: false
         source: "module_inputs.outputs.local_wais_output_file"
         filename: "local-wais-output.nc"
         help: "Path to local WAIS output sea-level file"
@@ -209,6 +218,7 @@ arguments:
         optional: true
       - name: "local-eais-output-file"
         type: "file"
+        pass_to_total: false
         source: "module_inputs.outputs.local_eais_output_file"
         filename: "local-eais-output.nc"
         help: "Path to local EAIS output sea-level file"

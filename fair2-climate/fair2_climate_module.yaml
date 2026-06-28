@@ -67,6 +67,7 @@ arguments:
       default_value: 19
     - name: "seed"
       type: "int"
+      optional: false
       source: "module_inputs.options.seed"
       default_value: 1234
       help: "Seed for the random number generator."

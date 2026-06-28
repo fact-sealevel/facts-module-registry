@@ -54,6 +54,7 @@ arguments:
       transform: "filename"
       mount:
         container_path: "/mnt/shared_in"
+        volume: "input"
     - name: "pipeline-id"
       type: "str"
       source: "metadata.pipeline-id"
@@ -66,6 +67,7 @@ arguments:
       type: "int"
       source: "module_inputs.options.seed"
       default_value: 1234
+      optional: false
       help: "Seed value for random number generator"
   
   # Input file arguments
@@ -74,7 +76,7 @@ arguments:
       type: "file"
       source: "module_inputs.inputs.climate_data_file"
       help: "NetCDF4/HDF5 file containing surface air temperature data"
-      filename: "fair-temperature/climate.nc"
+      climate_output_type: "output-climate-file"
       mount:
         volume: "output" # Implicit dependency: needs fair output
         container_path: "/mnt/out"
@@ -129,6 +131,7 @@ arguments:
         filename: "gslr.nc"
         help: "Path to output global sea-level rise file"
         output_type: "global"
+        pass_to_total: true
         mount:
           volume: "output"
           container_path: "/mnt/out"
@@ -139,6 +142,7 @@ arguments:
         filename: "lslr.nc"
         help: "Path to output local sea-level rise file"
         output_type: "local"
+        pass_to_total: true
         mount:
           volume: "output"
           container_path: "/mnt/out"
@@ -149,6 +153,7 @@ arguments:
         filename: "lslr_quantiles.nc"
         help: "Path to output local sea-level rise quantiles file"
         output_type: "local"
+        pass_to_total: false
         mount:
           volume: "output"
           container_path: "/mnt/out"
