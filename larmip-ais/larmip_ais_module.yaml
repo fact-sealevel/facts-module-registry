@@ -59,6 +59,7 @@ arguments:
       help: "File containing name, id, lat, and lon of points for localization"
       transform: "filename"
       mount:
+        volume: "shared_input"
         container_path: "/mnt/shared_in"
 
   # Module-specific options
