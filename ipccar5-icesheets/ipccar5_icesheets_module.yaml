@@ -118,7 +118,7 @@ arguments:
       source: "module_inputs.inputs.climate_data_file"
       help: "NetCDF4/HDF5 file containing surface temperature data (this should be a fair output)"
       #filename: "fair-temperature/climate.nc"
-      climate_output_type: "output-climate-file"
+      climate_step_output: "output-climate-file"
       mount:
         volume: "output" # Implicit dependency: needs fair output
         container_path: "/mnt/out"

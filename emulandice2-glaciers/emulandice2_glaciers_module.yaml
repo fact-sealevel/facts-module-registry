@@ -125,7 +125,7 @@ arguments:
       type: "str"
       source: "module_inputs.inputs.climate_data_file"
       optional: false
-      climate_output_type: "output-climate-file"
+      climate_step_output: "output-climate-file"
       help: "Fair output or tlm data"
       mount:
         volume: "output"

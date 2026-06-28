@@ -119,7 +119,7 @@ arguments:
       type: "str"
       source: "module_inputs.inputs.climate_data_file"
       optional: false
-      climate_output_type: "output-climate-file"
+      climate_step_output: "output-climate-file"
       help: "Path to climate data file to be used in experiment (usually output of climate step or supplied alt. fair data)."
       mount:
         volume: "output"

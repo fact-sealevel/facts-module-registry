@@ -67,7 +67,7 @@ arguments:
       source: "module_inputs.inputs.input_data_file"
       help: "Full path for temperature trajectory input file"
       #filename: "fair-temperature/gsat.nc"
-      climate_output_type: "output-climate-file"
+      climate_step_output: "output-climate-file"
       mount:
         volume: "output"
         container_path: "/mnt/out"
