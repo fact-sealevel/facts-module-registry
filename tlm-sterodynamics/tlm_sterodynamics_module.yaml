@@ -103,7 +103,7 @@ arguments:
       type: "file"
       source: "module_inputs.inputs.climate_data_file"
       #filename: "fair-temperature/climate.nc"
-      climate_output_type: "output-climate-file"
+      climate_step_output: "output-climate-file"
       help: "TO DO ADD HELP TEXT"
       mount:
         volume: "output" # Implicit dependency: needs fair output
