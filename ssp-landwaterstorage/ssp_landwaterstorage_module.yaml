@@ -61,6 +61,7 @@ arguments:
       transform: "filename"
       mount:
         container_path: "/mnt/shared_in"
+        volume: "input"
 
   # Module-specific options
   options:

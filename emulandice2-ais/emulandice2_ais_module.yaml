@@ -165,7 +165,7 @@ arguments:
         optional: true
         help: "Path to the output GSLR file."
         output_type: "global"
-        #filename: "output-gslr-AIS.nc"
+        filename: "output-gslr-AIS.nc"
         pass_to_total: true
         mount:
           volume: "output"
@@ -179,9 +179,6 @@ arguments:
         output_type: "local"
         filename: "output-lslr-AIS.nc"
         pass_to_total: true
-        #filename_map:
-        #  region:
-        #    ALL: "output-lslr-AIS-ALL.nc"
         mount:
           volume: "output"
           container_path: "/mnt/out"
