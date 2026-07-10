@@ -5,7 +5,7 @@
 # TODO ADD
 
 module_name: "extremesealevel2-afs"
-container_image: "ghcr.io/fact-sealevel/extremesealevel2-afs:0.1.0
+container_image: "ghcr.io/fact-sealevel/extremesealevel2-afs:0.1.0"
 uses_climate_file: false
 climate_file_required: false
 command: "main"
@@ -70,7 +70,7 @@ arguments:
     - name: "reffreq-data"
       type: "str"
       source: "module_inputs.options.reffreq_data"
-      default_value: 0.01
+      default_value: "custom"
       help: "Which protection level frequencies data to use"
     - name: "target-AFs"
       type: "int"
@@ -78,7 +78,15 @@ arguments:
       default_value: 20
       help: "Comma-delimited list to AFs to project timing for (set to none for no output)."
     - name: "target-freqs"
+      type: "float"
+      source: "module_inputs.options.target_freqs"
+      default_value: 1.0
+      help: "Comma-delimited list of frequencies to project timing for (set to none for no output)"
     - name: "below-threshold"
+      type: "str"
+      source: "module_inputs.options.below_threshold"
+      default_value: "mhhw"
+      help: "How to model events below the GPD threshold (default= log linear extrapolation to mhhw)."
     - name: "quantile-min"
       type: "float"
       source: "module_inputs.options.quantile_min"
@@ -116,7 +124,7 @@ arguments:
     - name: "reffreq-data-file"
       type: "file"
       source: "module_inputs.inputs.reffreq_data_file"
-      filename: "refFreqs/flopros_estimates_at_coastrp_locations.nc"
+      filename: "extremesealevel2_AFs_fulldata/refFreqs/flopros_estimates_at_coastrp_locations.nc"
       mount:
         volume: "input"
         container_path: "/mnt/module_specific_in"
@@ -125,6 +133,9 @@ arguments:
       source: "module_inputs.inputs.esl_data_path"
       default_value: "extremesealevel2_AFs_fulldata/esl_data/gesla3_data"
       help: "Directory containing requested ESL data."
+      mount:
+        volume: "module_specific_in"
+        container_path: "/mnt/module_specific_in"
 
   outputs:
     files:

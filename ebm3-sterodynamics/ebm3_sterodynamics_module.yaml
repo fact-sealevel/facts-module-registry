@@ -8,7 +8,7 @@
 # https://zenodo.org/records/11506798/files/ebm3_thermal_expansion_data.tgz
 
 module_name: "ebm3-sterodynamics"
-container_image: "ghcr.io/fact-sealevel/ebm3-sterodynamics:0.1.1"
+container_image: "ghcr.io/fact-sealevel/ebm3-sterodynamics:0.1.2"
 uses_climate_file: true
 climate_file_required: true
 command: "main"
