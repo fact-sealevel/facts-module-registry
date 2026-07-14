@@ -26,13 +26,6 @@ arguments:
     - name: "pyear-step"
       type: "int"
       source: "metadata.pyear_step"
-    #- name: "location-file"
-    #  type: "str"
-    #  source: "metadata.location-file"
-    #  optional: true
-    #  help: "File containing name, id, lat, and lon of points for localization"
-    #  mount:
-    #    container_path: "/mnt/shared_in"
 
   # Module-specific options
   options:
