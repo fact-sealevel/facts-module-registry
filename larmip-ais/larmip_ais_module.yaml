@@ -134,7 +134,7 @@ arguments:
         transform: "filename"
       external_volume: true # Indicates this comes from an external module
     - name: "scaling-coefficients-dir"
-      type: "str"
+      type: "dir"
       source: "module_inputs.inputs.scaling_coefficients_dir"
       help: "TO DO ADD HELP TEXT"
       default_value: "ScalingCoefficients"
@@ -142,7 +142,7 @@ arguments:
         volume: "input"
         container_path: "/mnt/module_specific_in"
     - name: "r-functions-dir"
-      type: "str"
+      type: "dir"
       source: "module_inputs.inputs.r_functions_dir"
       help: "TO DO ADD HELP TEXT"
       default_value: "RFunctions"

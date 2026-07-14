@@ -125,8 +125,9 @@ arguments:
         volume: "output"
         container_path: "/mnt/out"
     - name: "gesla-dir"
-      type: "file"
+      type: "dir"
       source: "module_inputs.inputs.gesla_dir"
+      default_value: "gesla_data_full"
       mount:
         volume: "module_specific_in"
         container_path: "/mnt/module_specific_in"
