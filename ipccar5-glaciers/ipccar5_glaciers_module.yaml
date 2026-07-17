@@ -122,7 +122,7 @@ arguments:
 
   fingerprint_params:
     - name: "fingerprint-dir"
-      type: "str"
+      type: "dir"
       source: "module_inputs.fingerprint_params.fingerprint_dir"
       help: "TO DO ADD HELP TEXT"
       default_value: FPRINT

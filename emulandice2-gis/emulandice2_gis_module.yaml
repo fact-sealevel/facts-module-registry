@@ -97,7 +97,7 @@ arguments:
       optional: false
   fingerprint_params:
     - name: "grdfingerprintfile"
-      type: "str"
+      type: "file"
       source: "module_inputs.fingerprint-params.grdfingerprintfile"
       #optional: true
       filename: "grd_fingerprintmap.yml"
@@ -106,7 +106,7 @@ arguments:
         volume: "module_specific_in"
         container_path: "/mnt/module_specific_in"
     - name: "fingerprint-dir"
-      type: "str"
+      type: "dir"
       source: "module_inputs.fingerprint-params.fingerprint_dir"
       #optional: true
       default_value: "FPRINT"
