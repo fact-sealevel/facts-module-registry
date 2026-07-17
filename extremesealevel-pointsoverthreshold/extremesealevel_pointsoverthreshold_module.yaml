@@ -117,7 +117,6 @@ arguments:
 
   inputs:
     # Total localized sea-level file (path under output root, e.g. facts-total/wf1_total.nc).
-    # Add "total_localsl_file" / "total-localsl-file" to output_root_relative_inputs in the adapter if using relative paths.
     - name: "total-localsl-file"
       type: "file"
       source: "module_inputs.inputs.total_localsl_file"
@@ -125,8 +124,10 @@ arguments:
         volume: "output"
         container_path: "/mnt/out"
     - name: "gesla-dir"
-      type: "file"
+      type: "dir"
+      default_value: "gesla_data_full"
       source: "module_inputs.inputs.gesla_dir"
+      help: "TO DO ADD HELP TEXT"
       mount:
         volume: "module_specific_in"
         container_path: "/mnt/module_specific_in"

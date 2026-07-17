@@ -125,7 +125,6 @@ arguments:
     - name: "climate-data-file"
       type: "file"
       source: "module_inputs.inputs.climate_data_file"
-      #filename: "fair-temperature/climate.nc"
       climate_step_output: "output-climate-file"
       help: "TO DO ADD HELP TEXT"
       mount:
@@ -134,7 +133,7 @@ arguments:
         transform: "filename"
       external_volume: true # Indicates this comes from an external module
     - name: "scaling-coefficients-dir"
-      type: "str"
+      type: "dir"
       source: "module_inputs.inputs.scaling_coefficients_dir"
       help: "TO DO ADD HELP TEXT"
       default_value: "ScalingCoefficients"
@@ -142,7 +141,7 @@ arguments:
         volume: "input"
         container_path: "/mnt/module_specific_in"
     - name: "r-functions-dir"
-      type: "str"
+      type: "dir"
       source: "module_inputs.inputs.r_functions_dir"
       help: "TO DO ADD HELP TEXT"
       default_value: "RFunctions"
