@@ -5,7 +5,7 @@
 # corresponding containerized facts module repository and be generated semi programmatically.
 
 module_name: "facts-total"
-container_image: "ghcr.io/fact-sealevel/facts-total:0.1.4"
+container_image: "ghcr.io/fact-sealevel/facts-total:0.2.0"
 climate_file_required: false
 skip_fingerprint_params: true
 per_workflow: true
