@@ -1,0 +1,121 @@
+# <<GOPHER BUCKETS>> MODULE CONFIGURATION
+# This YAML describes the arguments and configuration needed to run the module.
+#
+# Input data archive:
+# https://zenodo.org/records/0000000/files/my_module_data.tgz
+ 
+module_name: "gopher-buckets"
+container_image: "ghcr.io/fact-sealevel/gopher-:0.1.0"
+command: "main"  #name of function called in CLI.py to run module
+uses_climate_file: true #True if module can accept projections generated in the climate step of a FACTS experiment
+climate_file_required: true #True if module *requires* climate projections from climate step of FACTS experiment
+ 
+arguments:
+  top_level:
+    - name: "pipeline-id"
+      type: "str"
+      source: "metadata.pipeline-id"
+      help: "Unique identifier for the pipeline running this code"
+    - name: "nsamps"
+      type: "int"
+      source: "metadata.nsamps"
+      help: "Number of samples to generate"
+    - name: "baseyear"
+      type: "int"
+      source: "metadata.baseyear"
+      help: "Year from which projections should be zeroed"
+    - name: "pyear-start"
+      type: "int"
+      source: "metadata.pyear_start"
+      help: "Projection start year"
+    - name: "pyear-end"
+      type: "int"
+      source: "metadata.pyear_end"
+      help: "Projection end year"
+    - name: "pyear-step"
+      type: "int"
+      source: "metadata.pyear_step"
+      help: "Projection year step"
+    - name: "location-file"
+      type: "str"
+      source: "metadata.location-file"
+      optional: true
+      transform: "filename"
+      help: "File containing name, id, lat, and lon of points for localization"
+      mount:
+        volume: "shared_input"
+        container_path: "/mnt/shared_in"
+ 
+  options:
+    - name: "rng-seed"
+      type: "int"
+      source: "module_inputs.options.seed"
+      optional: false
+      default_value: 1234
+      help: "Seed for the random number generator."
+    - name: "chunksize"
+      type: "int"
+      source: "module_inputs.options.chunksize"
+      optional: true
+      default_value: 1000
+      help: "Number of locations to process in each chunk"
+ 
+  fingerprint_params:
+    - name: "fingerprint-dir"
+      type: "str"
+      source: "module_inputs.fingerprint_params.fingerprint_dir"
+      default_value: FPRINT
+      help: "Directory containing sea-level fingerprint files"
+      mount:
+        volume: "shared_input"
+        container_path: "/mnt/shared_in"
+ 
+  inputs:
+    - name: "param-file"
+      type: "file"
+      source: "module_inputs.inputs.param_file"
+      filename: "my_module_params.nc"
+      help: "Model parameter file"
+      mount:
+        volume: "module_specific_input"
+        container_path: "/mnt/module_specific_in"
+ 
+  outputs:
+    files:
+      - name: "global-output-file"
+        type: "file"
+        source: "module_inputs.outputs.global_output_file"
+        filename: "global-output.nc"
+        output_type: "global"
+        pass_to_total: true
+        help: "Global mean sea-level contribution"
+        mount:
+          volume: "output"
+          container_path: "/mnt/out"
+          transform: "filename"
+      - name: "local-output-file"
+        type: "file"
+        source: "module_inputs.outputs.local_output_file"
+        filename: "local-output.nc"
+        output_type: "local"
+        pass_to_total: true
+        optional: true
+        help: "Localized sea-level projections"
+        mount:
+          volume: "output"
+          container_path: "/mnt/out"
+          transform: "filename"
+ 
+volumes:
+  module_specific_input:
+    host_path: "module_inputs.input_paths.module_specific_input_dir"
+    container_path: "/mnt/module_specific_in"
+    help: "Input data specific to my-module."
+  shared_input:
+    host_path: "module_inputs.input_paths.shared_input_dir"
+    container_path: "/mnt/shared_in"
+    help: "Input data shared across modules."
+  output:
+    host_path: "module_inputs.output_paths.output_dir"
+    container_path: "/mnt/out"
+    help: "Output directory."
