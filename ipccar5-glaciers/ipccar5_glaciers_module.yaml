@@ -10,7 +10,7 @@
 # https://zenodo.org/record/7478192/files/grd_fingerprints_data.tgz
 
 module_name: "ipccar5-glaciers"
-container_image: "ghcr.io/fact-sealevel/ipccar5:0.1.2"
+container_image: "ghcr.io/fact-sealevel/ipccar5:0.1.3"
 uses_climate_file: true
 climate_file_required: true
 command: "glaciers" # Specify which command to run
