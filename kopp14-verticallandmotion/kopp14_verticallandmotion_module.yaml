@@ -8,7 +8,7 @@
 # https://zenodo.org/record/7478192/files/kopp14_verticallandmotion_preprocess_data.tgz
 
 module_name: "kopp14-verticallandmotion"
-container_image: "ghcr.io/fact-sealevel/kopp14-verticallandmotion:0.1.0"
+container_image: "ghcr.io/fact-sealevel/kopp14-verticallandmotion:0.2.0"
 uses_climate_file: false
 climate_file_required: false
 command: "main"
